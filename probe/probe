@@ -1,0 +1,35 @@
+#!/bin/bash
+# @acordier 09-03-2014
+# monitoring - relaunch - deduplicate nxpush daemon
+
+#MAILADDR="antoine.cordier-2@univ-lille2.fr"
+NXPUSH_HOME=/home/nxpush
+LOGFILE=$NXPUSH_HOME/log/client.log
+PID_FILE=$NXPUSH_HOME/nxpush.pid
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+case "$(ps -eF | grep python | grep nxpush | awk '{print $2}' | wc -w)" in
+    
+    0)
+        echo "`date`; WARN: restarting nxpush." >> $LOGFILE
+	if [ -f $PIDFILE ]; then
+           rm -f $PIDFILE
+        fi
+	/etc/init.d/nxpush start   # && echo "Nxpush failed and restarted, please check" | mail -s "nxpush " $MAILADDR
+	
+    ;;
+
+    1) 
+	# OK, do nothing
+    ;;
+
+    *)
+        echo "`date`; WARN: found duplicates, cleaning out." >> $LOGFILE
+        for i in $(ps -eF | grep python | grep nxpush | awk '{print $2}'); do
+	    if [ "$i" != "$(cat $PIDFILE)" ]; then
+		kill -15 $i
+	    fi
+	done
+    ;;
+
+esac

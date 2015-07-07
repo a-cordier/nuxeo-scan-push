@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<host>https://ged.univ-lille2.fr</host>
+	<credentials>/home/nxpush/.credentials.xml</credentials>
+	<mapper>
+		<mapping>
+			<local>/var/nxpush</local>
+			<remote>/default-domain/dsi/Workspaces/Pole-Urbanisation-Modern/GED/scans</remote>
+		</mapping>
+	</mapper>
+	<ocr>
+		<script>/home/nxpush/nxpush/ocr.sh</script>
+	</ocr>
+</properties>
