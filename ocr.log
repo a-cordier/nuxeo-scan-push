@@ -1,0 +1,33 @@
+[2015-07-08 10:42:59] source: /tmp/ocr.pdf
+[2015-07-08 10:42:59] tmp: /tmp/tmp.CLn9KQahZt
+[2015-07-08 10:42:59] tmp content: ocr.tiff
+[2015-07-08 10:42:59] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 10:44:19] source: /tmp/ocr.pdf
+[2015-07-08 10:44:19] tmp: /tmp/tmp.IEC8c9c2th
+[2015-07-08 10:44:19] tmp content: ocr.tiff
+[2015-07-08 10:44:19] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 10:44:39] source: /tmp/ocr.pdf
+[2015-07-08 10:44:39] tmp: /tmp/tmp.VS501jyoFA
+[2015-07-08 10:44:40] tmp content: ocr.tiff
+[2015-07-08 10:44:40] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 13:42:08] DEBUGsource: /tmp/ocr14.pdf
+[2015-07-08 13:42:08] DEBUGtmp: /tmp/tmp.ZQYPebi8em
+[2015-07-08 13:42:08] source type: PDF
+[2015-07-08 13:42:08] tmp content: ocr14.tiff
+[2015-07-08 13:42:08] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 13:43:01] DEBUG source: /tmp/ocr14.pdf
+[2015-07-08 13:43:01] DEBUG tmp: /tmp/tmp.HH9DKpIwtH
+[2015-07-08 13:43:01] source type: PDF
+[2015-07-08 13:43:01] tmp content: ocr14.tiff
+[2015-07-08 13:43:01] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 13:50:53] DEBUG source: /tmp/ocr14.pdf
+[2015-07-08 13:50:53] DEBUG tmp: /tmp/tmp.ZBEPZAdS23
+[2015-07-08 13:50:53] DEBUG source type: PDF
+[2015-07-08 13:50:53] DEBUG 
+[2015-07-08 13:50:53] DEBUG tmp content: ocr14.tiff
+[2015-07-08 13:50:53] Tesseract Open Source OCR Engine v3.03 with Leptonica
+[2015-07-08 13:51:29] DEBUG source: /tmp/ocr14.pdf
+[2015-07-08 13:51:29] DEBUG tmp: /tmp/tmp.DC91CjcWfN
+[2015-07-08 13:51:29] DEBUG source type: PDF
+[2015-07-08 13:51:29] DEBUG GPL Ghostscript 9.10 (2013-08-30)
+[2015-07-08 13:51:29] DEBUG tmp content: 

@@ -91,6 +91,7 @@ def main():
 
     # setting up ocr wrapper
     try:
+        logger.debug('ocrscript location is %s' %ocrScript)
         ocr = OcrWrapper(ocrScript)
     except FileNotFoundError, e:
         logger.error('Failed to wrap ocr script: '+ str(e))

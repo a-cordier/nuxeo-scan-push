@@ -23,21 +23,38 @@ clean_exit(){
   exit $1
 }
 
+# $1 level
+# $2 message
+log(){
+  if [ -n "$2" ]
+  then
+    MSG="$2"
+  else
+    read MSG
+  fi
+  echo "$MSG" | sed "s/^/$(date '+[%F %T]') $1 /" >>$LOG
+}
+
 main(){
+  log DEBUG "source: $SOURCE"
+  log DEBUG "tmp: $WORK"
+  log DEBUG "source type: $TYPE" 
   if [ "PDF" == $TYPE ]
   then 
-    pdfToTiff 2> >( sed "s/^/$(date '+[%F %T]') /">>$LOG )
+    pdfToTiff 2> >(log ERROR)
   elif [ "TIFF" == $TYPE ]
   then
-    mv "$SOURCE" "$WORK/." 2> >( sed "s/^/$(date '+[%F %T]') /">>$LOG )
+    mv "$SOURCE" "$WORK/." 2> >(log ERROR)
   else 
+    log DEBUG "$SOURCE is not detected as a PDF"
     echo "$SOURCE"
     clean_exit 0
   fi
+  log DEBUG "tmp content: $(ls $WORK)"
   if [ -f "$WORK/$NAME.tiff" ]
   then
-    doOcr 2> >( sed "s/^/$(date '+[%F %T]') /">>$LOG) \
-    	&& cp "$WORK/$NAME.pdf" "$DIR" 2> >( sed "s/^/$(date '+[%F %T]') /">>$LOG )
+    doOcr 2> >(log ERROR) \
+    	&& cp "$WORK/$NAME.pdf" "$DIR" 2> >(log ERROR)
   fi
   if [ -f "$DIR/$NAME.pdf" ]
   then 

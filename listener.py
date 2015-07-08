@@ -30,7 +30,10 @@ class EventHandler(pyinotify.ProcessEvent):
         self.logger.debug('1')
         self.connector.setNxPath(self.mapper[path[:index]])
         self.logger.debug('2')
-        path = self.ocr.doOcr(path)
+        try:
+            path = self.ocr.doOcr(path)
+        except CalledProcessError, e:
+            logger.error('OCR subprocess failed: '+ str(e))
         self.logger.debug('3')
         path = path.rstrip()
         self.connector.upload(path)

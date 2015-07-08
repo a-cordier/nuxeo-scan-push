@@ -39,7 +39,6 @@ class NxConnector:
             folderUid = nxFolder['uid']
             nxDoc = self.session.create( folderUid, "File", fileName, {'dc:title': fileName} )
             docPath = nxDoc['path']
-    
             try:
                 binStream = open(localPath, 'rb')
                 self.logger.debug('connector reads stream')
