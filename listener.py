@@ -32,7 +32,7 @@ class EventHandler(pyinotify.ProcessEvent):
         self.logger.debug('2')
         try:
             path = self.ocr.doOcr(path)
-        except CalledProcessError, e:
+        except Exception, e:
             logger.error('OCR subprocess failed: '+ str(e))
         self.logger.debug('3')
         path = path.rstrip()

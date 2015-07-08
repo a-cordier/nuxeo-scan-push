@@ -32,7 +32,10 @@ log(){
   else
     read MSG
   fi
-  echo "$MSG" | sed "s/^/$(date '+[%F %T]') $1 /" >>$LOG
+  if [ -n "$MSG" ]
+  then
+    echo "$MSG" | sed "s/^/$(date '+[%F %T]') $1 /" >>$LOG
+  fi
 }
 
 main(){
@@ -41,10 +44,10 @@ main(){
   log DEBUG "source type: $TYPE" 
   if [ "PDF" == $TYPE ]
   then 
-    pdfToTiff 2> >(log ERROR)
+    pdfToTiff 2> >( log ERROR )
   elif [ "TIFF" == $TYPE ]
   then
-    mv "$SOURCE" "$WORK/." 2> >(log ERROR)
+    mv "$SOURCE" "$WORK/." 2> >( log ERROR )
   else 
     log DEBUG "$SOURCE is not detected as a PDF"
     echo "$SOURCE"
@@ -53,8 +56,8 @@ main(){
   log DEBUG "tmp content: $(ls $WORK)"
   if [ -f "$WORK/$NAME.tiff" ]
   then
-    doOcr 2> >(log ERROR) \
-    	&& cp "$WORK/$NAME.pdf" "$DIR" 2> >(log ERROR)
+    doOcr
+    cp "$WORK/$NAME.pdf" "$DIR" 2> >( log ERROR )
   fi
   if [ -f "$DIR/$NAME.pdf" ]
   then 
