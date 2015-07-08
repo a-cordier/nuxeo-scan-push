@@ -14,7 +14,7 @@ pdfToTiff(){
 }
 
 doOcr(){
-  tesseract -l fra "$WORK/$NAME.tiff" "$WORK/$NAME" pdf 1>/dev/null
+  tesseract -l fra "$WORK/$NAME.tiff" "$WORK/$NAME" pdf 2>&1 >/dev/null
 }
 
 # $1 code de sortie
@@ -56,7 +56,7 @@ main(){
   log DEBUG "tmp content: $(ls $WORK)"
   if [ -f "$WORK/$NAME.tiff" ]
   then
-    doOcr
+    doOcr | tr '\n' ' ' | log ERROR
     cp "$WORK/$NAME.pdf" "$DIR" 2> >( log ERROR )
   fi
   if [ -f "$DIR/$NAME.pdf" ]
