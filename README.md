@@ -2,6 +2,7 @@
 
 ## Description
 
+
 Ce module écrit en python s'appuie sur le client écrit par sfermigier pour la partie rest (imports des documents réceptionnés dans la ged)
 
 Le client original a subi quelques modifications pour utiliser base64 et rendre possible l'importation des binaires qui fonctionnait de manière aléatoire voire pas du tout dans l'état original de la librairie. Il faut donc utiliser le client inclus dans le module.
@@ -9,6 +10,7 @@ Le client original a subi quelques modifications pour utiliser base64 et rendre 
 Le module s'appuie également sur pyinotify pour la partie monitoring du système de fichier. Comme les scans intègrent déjà une fonctionnalité de suppression des fichiers numérisés après un nombre de jour défini le seul gestionnaire d'événements qui a été créé réponds aux événements de type création de fichier.
 
 ## Principe de fonctionnement :
+
 
  - Le scanner est configuré pour numériser dans un répertoire défini.
  - Le service est à l'écoute des événements de type création de fichier pour ce répertoire (défini dans sa configuration).
@@ -42,6 +44,7 @@ Avant de lancer le module il faut configurer les options d'authentification et d
 
 ## Configuration
 
+
 La configuration du mapping s'effectue dans le fichier nx-properties.xml qui DOIT se trouver dans le même répertoire que le fichier nxpush.py
 
 La partie credentials contient le chemin vers le fichier contenant les identifiants utilisés par le service
@@ -51,6 +54,7 @@ Une partie remote qui indique le répertoire destinataire des documents dans la 
 Les balises mapping peuvent être multipliées pour mettre plusieurs répertoire à l'écoute.
 
 Il suffit ensuite de créer le fichier credentials.xml avec des droits restreints et de lui donner la forme suivante :
+
 ```xml
 <?xml version="1.0"?> 
 
@@ -61,5 +65,6 @@ Il suffit ensuite de créer le fichier credentials.xml avec des droits restreint
 ```
 
 ## Exécution
+
 
 Une fois la configuration faite il suffit de lancer le service. Le scanner doit être configuré pour numériser au bon endroit. Toutes les opérations de routage de documents sont implémentées côté GED.
