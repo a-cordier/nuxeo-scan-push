@@ -60,6 +60,6 @@ Il suffit ensuite de créer le fichier credentials.xml avec des droits restreint
 </credentials> 
 ```
 
-#Exécution
+## Exécution
 
 Une fois la configuration faite il suffit de lancer le service. Le scanner doit être configuré pour numériser au bon endroit. Toutes les opérations de routage de documents sont implémentées côté GED.
