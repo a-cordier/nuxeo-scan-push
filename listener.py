@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 import pyinotify
 import logging
 from connector import NxConnector
+from fileutils import FileUtils
 import sys
 import functools
 import os
@@ -24,24 +25,45 @@ class EventHandler(pyinotify.ProcessEvent):
         
     def process_IN_CREATE(self, event):
         path = event.pathname
+        self.logger.debug('File path: '+ path)
         if not os.path.isfile(path):
             return
+        if FileUtils.isFilePart(path):
+            return
         index = path.rfind('/')
-        self.logger.debug('1')
         self.connector.setNxPath(self.mapper[path[:index]])
-        self.logger.debug('2')
         try:
             path = self.ocr.doOcr(path)
         except Exception, e:
-            logger.error('OCR subprocess failed: '+ str(e))
-        self.logger.debug('3')
+            self.logger.error('OCR subprocess failed: '+ str(e))
         path = path.rstrip()
         self.connector.upload(path)
         self.logger.info('%s processed' %path)
 
     def process_IN_DELETE(self, event):
-        self.logger.info("Removing:", event.pathname)
+        self.logger.debug("Removing:", event.pathname)
         
+    def process_IN_MOVE_SELF(self, event):
+        self.logger.debug("Move self:", event.pathname)
+
+    def process_IN_MODIFY(self, event):
+        self.logger.debug("Modify:", event.pathname)
+
+    def process_IN_OPEN(self, event):
+        self.logger.debug("Open:", event.pathname)
+
+    def process_IN_ACCESS(self, event):
+        self.logger.debug("Access:", event.pathname)
+
+    def process_IN_ATTRIB(self, event):
+        self.logger.debug("Attrib:", event.pathname)
+
+    def process_IN_CLOSE_NOWRITE(self, event):
+        self.logger.debug("Close no write:", event.pathname)
+
+    def process_IN_MASK_ADD(self, event):
+        self.logger.debug("Mask add:", event.pathname)
+
     def setConnector(self, connector):
         self.connector = connector
 

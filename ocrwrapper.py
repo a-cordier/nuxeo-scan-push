@@ -10,5 +10,5 @@ class OcrWrapper:
 	def doOcr(self, filepath):
 		self.logger.debug('path: %s ' %filepath)
 		out = subprocess.check_output([self.script,filepath])
-		self.logger.debug('out: %s ' %filepath)
+		self.logger.debug('out: %s ' %out)
 		return out

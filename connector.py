@@ -7,10 +7,12 @@ upload file from file system to nuxeo repo
 '''
 from __future__ import unicode_literals
 from nuxeoautomation import Session
+from fileutils import FileUtils
 import logging
 import codecs  
 from io import open
 import sys
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -29,33 +31,21 @@ class NxConnector:
         self.nxPath=path
     
     # You need to set nxPath with the convenient method before calling this    
-    def upload(self, localPath):
-        fileName = self.getFileName(localPath)
-        extension = self.getExtension(fileName)
-        if extension.lower() == '.filepart':
-            return
-        else:
-            nxFolder = self.session.fetch(self.nxPath.strip())
-            folderUid = nxFolder['uid']
-            nxDoc = self.session.create( folderUid, "File", fileName, {'dc:title': fileName} )
-            docPath = nxDoc['path']
-            try:
-                binStream = open(localPath, 'rb')
-                self.logger.debug('connector reads stream')
-                blob=binStream.read().encode("base64")
-            except Exception, e:
-                self._handle_error(e)
-                raise               
-            return self.session.attachBlob(docPath, blob, extension)
-	    
-
-    def getExtension(self, fileName):
-        return fileName[fileName.rfind('.'):]
-    
-    def getFileName(self, path):
-        return path[path.rfind("/")+1:]
-
-        
+    def upload(self, path):
+        fileName = FileUtils.getFileName(path)
+        extension = FileUtils.getExtension(fileName)
+        nxFolder = self.session.fetch(self.nxPath.strip())
+        folderUid = nxFolder['uid']
+        nxDoc = self.session.create( folderUid, "File", fileName, {'dc:title': fileName} )
+        docPath = nxDoc['path']
+        try:
+            binStream = open(path, 'rb')
+            self.logger.debug('connector reads stream')
+            blob=binStream.read().encode("base64")
+        except Exception, e:
+            self._handle_error(e)
+            raise               
+        return self.session.attachBlob(docPath, blob, extension)      
 
 
     def _handle_error(self, e):

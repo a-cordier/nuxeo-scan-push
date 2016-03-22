@@ -4,17 +4,19 @@ WORK=`mktemp -d`
 # remove path & extension
 NAME=${SOURCE%.*}
 NAME=${NAME##*/}
-TYPE=`file -b $SOURCE | awk '{ print $1 }'`
-DIR=`dirname $SOURCE`
-LOG=ocr.log
+#TYPE=$(file -b $SOURCE | awk '{ print $1 }')
+TYPE="${SOURCE##*.}"
+#DIR=`dirname $SOURCE`
+DIR=/tmp
+LOG=/home/nxpush/log/ocr.log
 
 pdfToTiff(){
  # conversion TIFF
-  gs -q -sDEVICE=tiffg4 -dBATCH -dNOPAUSE -r500 -sOutputFile="$WORK/$NAME.tiff" "$SOURCE"
+  gs -q -sDEVICE=tiffg4 -dBATCH -dNOPAUSE -r500 -sOutputFile="$WORK/$NAME.tif" "$SOURCE"
 }
 
 doOcr(){
-  tesseract -l fra "$WORK/$NAME.tiff" "$WORK/$NAME" pdf 2>&1 >/dev/null
+  tesseract -l fra "$WORK/$NAME.tif" "$WORK/$NAME" pdf 2>&1 >/dev/null
 }
 
 # $1 code de sortie
@@ -42,10 +44,10 @@ main(){
   log DEBUG "source: $SOURCE"
   log DEBUG "tmp: $WORK"
   log DEBUG "source type: $TYPE" 
-  if [ "PDF" == $TYPE ]
+  if [ "PDF" == ${TYPE^^} ]
   then 
     pdfToTiff 2> >( log ERROR )
-  elif [ "TIFF" == $TYPE ]
+  elif [ "TIF" == ${TYPE^^} ]
   then
     mv "$SOURCE" "$WORK/." 2> >( log ERROR )
   else 
@@ -54,9 +56,9 @@ main(){
     clean_exit 0
   fi
   log DEBUG "tmp content: $(ls $WORK)"
-  if [ -f "$WORK/$NAME.tiff" ]
+  if [ -f "$WORK/$NAME.tif" ]
   then
-    doOcr | tr '\n' ' ' | log ERROR
+    doOcr | tr '\n' ' ' | log DEBUG
     cp "$WORK/$NAME.pdf" "$DIR" 2> >( log ERROR )
   fi
   if [ -f "$DIR/$NAME.pdf" ]
